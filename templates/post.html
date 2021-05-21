@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Записи сообщества {% endblock %}
+{% block header %}  {% endblock %}
+
+{% block content %}
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-md-3 mb-3 mt-1">
+            <div class="card">
+                <div class="card-body">
+                    <div class="h2">
+                        <!-- Имя автора -->
+                        {{prof_user.get_full_name}}
+                    </div>
+                    <div class="h3 text-muted">
+                        <!-- username автора -->
+                        @{{prof_user.username}}
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="h6 text-muted">
+                            Подписчиков: XXX <br/>
+                            Подписан: XXX
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="h6 text-muted">
+                            <!--Количество записей -->
+                            Записей: {{count}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+
+            <!-- Пост -->
+
+            <div class="card-body">
+                {% include "post_item.html" with post=post %}
+
+                        {% include "comments.html"%}
+                        <!-- Комментарии -->
+                        {% for item in items %}
+                        <div class="media mb-4">
+                            <div class="media-body">
+                                <h5 class="mt-0">
+                                    <a
+                                            href="{% url 'profile' item.author.username %}"
+                                            name="comment_{{ item.id }}"
+                                    >{{ item.author.username }}</a>
+                                </h5>
+                                {{ item.text }}
+                            </div>
+                            <small class="text-muted">{{ item.created| date:"d M Y H:m"}}</small>
+                        </div>
+
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+{% endblock %}

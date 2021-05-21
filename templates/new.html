@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %} {{context.title}} {% endblock %}
+{% block content %}
+{% load user_filters%}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 p-5">
+        <div class="card">
+            <div class="card-header">{{context.title}}</div>
+            <div class="card-body">
+
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="form-group">
+                        <br>
+                        {{field.label}}
+                        {{field}}
+                        {% if field.errors %}
+                        <div class="alert alert-danger">
+                            {{field.errors}}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+
+                    <button type="submit" class="btn btn-primary">
+                        {{context.button}}
+                    </button>
+                </form>
+                </p>
+            </div>
+            {% endblock %}
